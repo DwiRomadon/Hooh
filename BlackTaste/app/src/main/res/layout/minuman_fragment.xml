@@ -9,18 +9,10 @@
     android:orientation="horizontal">
 
     <EditText
-    android:layout_width="300dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/pencarian_minuman"
     android:hint="Pencarian"/>
-
-
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/button_search"
-        android:text="Go"/>
 
 </LinearLayout>
 

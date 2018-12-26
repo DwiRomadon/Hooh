@@ -6,12 +6,12 @@ public class Minuman {
     private String NamaMinuman;
     private String HargaMinuman;
     private String StokMinuman;
-    private int FotoMinuman;
+    private String FotoMinuman;
 
     public Minuman() {
     }
 
-    public Minuman(String nama, String harga, String stok, int foto) {
+    public Minuman(String nama, String harga, String stok, String foto) {
         NamaMinuman = nama;
         HargaMinuman = harga;
         StokMinuman = stok;
@@ -33,7 +33,7 @@ public class Minuman {
         return StokMinuman;
     }
 
-    public int getFotoMinuman() {
+    public String getFotoMinuman() {
         return FotoMinuman;
     }
 
@@ -52,7 +52,7 @@ public class Minuman {
         StokMinuman = stok;
     }
 
-    public void setFotoMinuman(int foto) {
+    public void setFotoMinuman(String foto) {
         FotoMinuman = foto;
     }
 }

@@ -12,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
+import com.example.asepfathurrahman.blacktaste.server.Config_URL;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -37,9 +39,14 @@ public class RecyclerViewAdapterB extends RecyclerView.Adapter<RecyclerViewAdapt
     public void onBindViewHolder(RecyclerViewAdapterB.MyViewHolder holder, final int position) {
 
         holder.tv_nama.setText(bData.get(position).getNamaMinuman());
-        holder.tv_harga.setText(bData.get(position).getHargaMinuman());
-        holder.tv_stok.setText(bData.get(position).getStokMinuman());
-        holder.img.setImageResource(bData.get(position).getFotoMinuman());
+        holder.tv_harga.setText("Harga\t: "+bData.get(position).getHargaMinuman());
+        holder.tv_stok.setText("Stok\t\t: "+bData.get(position).getStokMinuman());
+
+        Picasso.get()
+                .load(Config_URL.base_URL+"/assets/images/produk/"+ bData.get(position).getFotoMinuman())
+                .resize(50, 50)
+                .centerCrop()
+                .into(holder.img);
 
         bDialog = new Dialog(bContext);
         bDialog.setContentView(R.layout.dialog_minuman);

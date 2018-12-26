@@ -7,10 +7,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -18,8 +21,6 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.asepfathurrahman.blacktaste.server.AppController;
 import com.example.asepfathurrahman.blacktaste.server.Config_URL;
@@ -40,7 +41,7 @@ public class FragmentMakanan extends Fragment {
     View v;
     private RecyclerView myrecyclerview;
 
-    private ArrayList<Makanan> oneMakanan = new ArrayList<Makanan>();
+    List<Makanan> oneMakanan = new ArrayList<Makanan>();
 
     RecyclerViewAdapter recyclerAdapter;
 
@@ -51,6 +52,8 @@ public class FragmentMakanan extends Fragment {
 
     private ProgressDialog pDialog;
 
+    EditText search;
+
     public FragmentMakanan() {
     }
 
@@ -59,10 +62,13 @@ public class FragmentMakanan extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.makanan_fragment,container,false);
         myrecyclerview = (RecyclerView) v.findViewById(R.id.makanan_recyclerview);
+        search = (EditText) v.findViewById(R.id.pencarian_makanan);
         recyclerAdapter = new RecyclerViewAdapter(getContext(),oneMakanan);
         myrecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
+        myrecyclerview.setHasFixedSize(true);
         oneMakanan.clear();
         myrecyclerview.setAdapter(recyclerAdapter);
+        cari();
         return v;
     }
 
@@ -74,11 +80,11 @@ public class FragmentMakanan extends Fragment {
         pDialog.setCancelable(false);
 
         oneMakanan = new ArrayList<>();
-        dataBuku();
+        dataMakanan();
 
     }
 
-    public void dataBuku(){
+    public void dataMakanan(){
         //Tag used to cancel the request
         String tag_string_req = "req";
 
@@ -140,7 +146,7 @@ public class FragmentMakanan extends Fragment {
             }
         };
 
-        //strReq.setRetryPolicy(policy);
+        strReq.setRetryPolicy(policy);
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
@@ -153,5 +159,36 @@ public class FragmentMakanan extends Fragment {
         if (pDialog.isShowing())
             pDialog.dismiss();
     }
+
+    public void cari(){
+        search.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {}
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            public void onTextChanged(CharSequence query, int start, int before, int count) {
+
+                query = query.toString().toLowerCase();
+
+                List<Makanan> filteredList = new ArrayList<Makanan>();
+
+                for (int i = 0; i < oneMakanan.size(); i++) {
+
+                    final String text = oneMakanan.get(i).getNamaMakanan().toLowerCase();
+                    if (text.contains(query)) {
+
+                        filteredList.add(oneMakanan.get(i));
+                    }
+                }
+
+                recyclerAdapter = new RecyclerViewAdapter(getContext(),filteredList);
+                myrecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
+                myrecyclerview.setAdapter(recyclerAdapter);
+                recyclerAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
 
 }
