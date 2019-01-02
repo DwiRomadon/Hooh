@@ -1,7 +1,9 @@
 package com.example.asepfathurrahman.blacktaste;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,9 +25,15 @@ public class RecyclerViewAdapterB extends RecyclerView.Adapter<RecyclerViewAdapt
     List<Minuman> bData;
     Dialog bDialog;
 
+    String noMenja,namaPemesan, idKaryawan;
+
     public RecyclerViewAdapterB(Context bContext, List<Minuman> bData) {
         this.bContext = bContext;
         this.bData = bData;
+        Intent a = ((Activity) bContext).getIntent();
+        this.noMenja = a.getStringExtra("nomeja");
+        this.namaPemesan = a.getStringExtra("namapemesan");
+        this.idKaryawan = a.getStringExtra("idkaryawan");
     }
 
     @Override
@@ -51,6 +59,7 @@ public class RecyclerViewAdapterB extends RecyclerView.Adapter<RecyclerViewAdapt
         bDialog = new Dialog(bContext);
         bDialog.setContentView(R.layout.dialog_minuman);
 
+
         holder.button_get.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,7 +70,7 @@ public class RecyclerViewAdapterB extends RecyclerView.Adapter<RecyclerViewAdapt
                 Button btnBatalMinuman = bDialog.findViewById(R.id.button_batal_minuman);
                 final ElegantNumberButton quantitiBtn = bDialog.findViewById(R.id.quantiti_button_minuman);
                 dialog_nama_tv.setText(bData.get(position).getNamaMinuman());
-                dialog_stok_tv.setText(bData.get(position).getStokMinuman());
+                dialog_stok_tv.setText("Stok : "+ bData.get(position).getStokMinuman());
 
                 btnInputMinuman.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -70,6 +79,7 @@ public class RecyclerViewAdapterB extends RecyclerView.Adapter<RecyclerViewAdapt
                                 + quantitiBtn.getNumber() + " buah", Toast.LENGTH_SHORT).show();
                     }
                 });
+
                 btnBatalMinuman.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

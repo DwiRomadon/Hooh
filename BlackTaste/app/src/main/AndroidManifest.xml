@@ -19,7 +19,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DaftarMenu" />
+        <activity android:name=".DaftarMenu"
+            android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".DaftarPesanan" />
         <activity android:name=".InputNomerMeja" />
         <activity android:name=".MainActivity"></activity>

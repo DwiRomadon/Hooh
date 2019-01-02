@@ -1,6 +1,7 @@
 package com.example.asepfathurrahman.blacktaste;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,6 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -53,6 +56,8 @@ public class FragmentMakanan extends Fragment {
     private ProgressDialog pDialog;
 
     EditText search;
+    LinearLayout linearPrice;
+    TextView textHarga, textItem;
 
     public FragmentMakanan() {
     }
@@ -61,14 +66,27 @@ public class FragmentMakanan extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.makanan_fragment,container,false);
+
+        Intent a = getActivity().getIntent();
+        String noNeja = a.getStringExtra("nomeja");
+        String test2 = a.getStringExtra("namapemesan");
+        //Toast.makeText(getActivity(), test, Toast.LENGTH_SHORT).show();
+
         myrecyclerview = (RecyclerView) v.findViewById(R.id.makanan_recyclerview);
+        //TextView text = (TextView) v.findViewById(R.id.txtTest);
+        //text.setText(test + test2);
         search = (EditText) v.findViewById(R.id.pencarian_makanan);
+        linearPrice = (LinearLayout) v.findViewById(R.id.linearPrice);
+        textHarga   = (TextView) v.findViewById(R.id.txtPrice);
+        textItem    = (TextView) v.findViewById(R.id.txtItem);
         recyclerAdapter = new RecyclerViewAdapter(getContext(),oneMakanan);
         myrecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         myrecyclerview.setHasFixedSize(true);
         oneMakanan.clear();
         myrecyclerview.setAdapter(recyclerAdapter);
         cari();
+
+        getPrice(noNeja);
         return v;
     }
 
@@ -188,6 +206,83 @@ public class FragmentMakanan extends Fragment {
                 recyclerAdapter.notifyDataSetChanged();
             }
         });
+    }
+
+
+    public void getPrice(final String idMeja){
+
+        //Tag used to cancel the request
+        String tag_string_req = "req_login";
+
+        pDialog.setMessage("Please Wait.....");
+        showDialog();
+        //loginBtn.startAnimation();
+
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                Config_URL.sumCount, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                //Log.d(TAG, "Login Response: " + response.toString());
+                //loginBtn.revertAnimation();
+                hideDialog();
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean status = jObj.getBoolean("status");
+
+                    if(status == true){
+
+                        JSONObject user     = jObj.getJSONObject("data");
+                        double price        = user.getDouble("price");
+                        String item         = user.getString("count");
+                        if (item.equals("0")) {
+                            linearPrice.setVisibility(View.GONE);
+                        }else {
+                            DecimalFormat kursIndonesia = (DecimalFormat) DecimalFormat.getCurrencyInstance();
+                            DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
+
+                            formatRp.setCurrencySymbol("Rp. ");
+                            formatRp.setMonetaryDecimalSeparator(',');
+                            formatRp.setGroupingSeparator('.');
+
+                            kursIndonesia.setDecimalFormatSymbols(formatRp);
+
+                            textHarga.setText("Total\t: " + kursIndonesia.format(price));
+                            textItem.setText("Item\t: " + item);
+                            linearPrice.setVisibility(View.VISIBLE);
+                        }
+
+                    }else {
+                        String error_msg = jObj.getString("msg");
+                        Toast.makeText(getActivity(), error_msg, Toast.LENGTH_LONG).show();
+
+                    }
+
+                }catch (JSONException e){
+                    //JSON error
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener(){
+
+            @Override
+            public void onErrorResponse(VolleyError error){
+                //Log.e(TAG, "Login Error : " + error.getMessage());
+                error.printStackTrace();
+                //loginBtn.revertAnimation();
+                hideDialog();
+            }
+        }){
+
+            @Override
+            protected Map<String, String> getParams(){
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("idMeja", idMeja);
+                return params;
+            }
+        };
+
+        strReq.setRetryPolicy(policy);
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
 

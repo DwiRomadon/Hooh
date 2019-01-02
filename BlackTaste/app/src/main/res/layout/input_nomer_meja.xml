@@ -15,6 +15,7 @@
 
         <TextView
             android:id="@+id/nomor_meja"
+            android:textColor="@color/colorPrimary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -24,8 +25,8 @@
 
         <Spinner
             android:id="@+id/input_meja"
-            android:layout_width="80dp"
-            android:layout_height="30dp">
+            android:layout_width="match_parent"
+            android:layout_height="35dp">
         </Spinner>
 
         <TextView
@@ -34,12 +35,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="Nama Pemesan"
+            android:textColor="@color/colorPrimary"
             android:textSize="18dp"
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/editText"
-            android:layout_width="wrap_content"
+            android:id="@+id/edNamaPemesan"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView"
             android:layout_alignParentStart="true"
@@ -47,25 +49,54 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:gravity="end">
 
-            <Button
+            <com.marozzi.roundbutton.RoundButton
                 android:id="@+id/button_batal_input"
                 android:layout_width="80dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center_vertical"
-                android:text="BATAL" />
+                android:text="BATAL"
+                app:rb_animation_alpha="false"
+                app:rb_animation_progress_color="@color/colorAccent"
+                app:rb_animation_progress_padding="8dp"
+                app:rb_animation_progress_width="2dp"
+                app:rb_animation_progress_style="circle"
+                app:rb_animation_corner_radius="20dp"
+                app:rb_animation_duration="500"
+                app:rb_background_color="@android:color/transparent"
+                app:rb_background_color_pressed="@color/colorPrimary"
+                app:rb_corner_color="@color/colorPrimary"
+                app:rb_corner_color_pressed="@color/colorPrimary"
+                app:rb_corner_radius="2dp"
+                app:rb_corner_width="1dp"
+                app:rb_text_color="@color/colorPrimary"
+                app:rb_text_color_pressed="@android:color/white"/>
 
-            <Button
+            <com.marozzi.roundbutton.RoundButton
                 android:id="@+id/button_input_meja"
                 android:layout_width="80dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
-                android:text="INPUT" />
-
+                android:text="INPUT"
+                app:rb_animation_alpha="false"
+                app:rb_animation_progress_color="@color/colorAccent"
+                app:rb_animation_progress_padding="8dp"
+                app:rb_animation_progress_width="2dp"
+                app:rb_animation_progress_style="circle"
+                app:rb_animation_corner_radius="20dp"
+                app:rb_animation_duration="500"
+                app:rb_background_color="@android:color/transparent"
+                app:rb_background_color_pressed="@color/colorPrimary"
+                app:rb_corner_color="@color/colorPrimary"
+                app:rb_corner_color_pressed="@color/colorPrimary"
+                app:rb_corner_radius="2dp"
+                app:rb_corner_width="1dp"
+                app:rb_text_color="@color/colorPrimary"
+                app:rb_text_color_pressed="@android:color/white"/>
         </LinearLayout>
 
     </LinearLayout>

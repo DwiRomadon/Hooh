@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="320dp"
         android:orientation="vertical">
 
         <TextView
@@ -35,6 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:textColor="@color/colorPrimary"
             android:text="Jumalah Pesanan"
             android:textSize="12dp" />
 
@@ -49,6 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="Keterangan"
+            android:textColor="@color/colorPrimary"
             android:textSize="12dp" />
 
         <EditText
@@ -65,20 +67,52 @@
             android:layout_marginTop="20dp"
             android:gravity="end">
 
-            <Button
+            <com.marozzi.roundbutton.RoundButton
                 android:id="@+id/button_batal_makanan"
                 android:layout_width="80dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center_vertical"
-                android:text="BATAL" />
+                android:text="BATAL"
+                android:layout_marginTop="17dp"
+                app:rb_animation_alpha="false"
+                app:rb_animation_progress_color="@color/colorAccent"
+                app:rb_animation_progress_padding="8dp"
+                app:rb_animation_progress_width="2dp"
+                app:rb_animation_progress_style="circle"
+                app:rb_animation_corner_radius="20dp"
+                app:rb_animation_duration="500"
+                app:rb_background_color="@android:color/transparent"
+                app:rb_background_color_pressed="@color/colorPrimary"
+                app:rb_corner_color="@color/colorPrimary"
+                app:rb_corner_color_pressed="@color/colorPrimary"
+                app:rb_corner_radius="2dp"
+                app:rb_corner_width="1dp"
+                app:rb_text_color="@color/colorPrimary"
+                app:rb_text_color_pressed="@android:color/white"/>
 
-            <Button
+            <com.marozzi.roundbutton.RoundButton
                 android:id="@+id/button_input_makanan"
                 android:layout_width="80dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
-                android:text="INPUT" />
+                android:text="INPUT"
+                android:layout_marginTop="17dp"
+                app:rb_animation_alpha="false"
+                app:rb_animation_progress_color="@color/colorAccent"
+                app:rb_animation_progress_padding="8dp"
+                app:rb_animation_progress_width="2dp"
+                app:rb_animation_progress_style="circle"
+                app:rb_animation_corner_radius="20dp"
+                app:rb_animation_duration="500"
+                app:rb_background_color="@android:color/transparent"
+                app:rb_background_color_pressed="@color/colorPrimary"
+                app:rb_corner_color="@color/colorPrimary"
+                app:rb_corner_color_pressed="@color/colorPrimary"
+                app:rb_corner_radius="2dp"
+                app:rb_corner_width="1dp"
+                app:rb_text_color="@color/colorPrimary"
+                app:rb_text_color_pressed="@android:color/white"/>
 
         </LinearLayout>
 

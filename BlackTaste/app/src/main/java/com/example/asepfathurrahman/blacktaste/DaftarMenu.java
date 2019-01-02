@@ -1,5 +1,6 @@
 package com.example.asepfathurrahman.blacktaste;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -29,6 +30,13 @@ public class DaftarMenu extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
 
-
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent a = new Intent(DaftarMenu.this, MainActivity.class);
+        startActivity(a);
+        finish();
+    }
+
 }

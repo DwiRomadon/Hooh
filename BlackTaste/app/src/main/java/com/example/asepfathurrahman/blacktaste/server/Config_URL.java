@@ -11,4 +11,8 @@ public class Config_URL
 
     public static String loginUrl = base_URL + "/API/login";
 
+    public static String noMeja = base_URL + "/API/meja";
+
+    public static String sumCount = base_URL + "/API/sumCountPreTransaksi";
+
 }

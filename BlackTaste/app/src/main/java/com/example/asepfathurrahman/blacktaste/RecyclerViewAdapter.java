@@ -1,7 +1,9 @@
 package com.example.asepfathurrahman.blacktaste;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,9 +26,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     List<Makanan> mData;
     Dialog mDialog;
 
+    String noMenja,namaPemesan, idKaryawan;
+
     public RecyclerViewAdapter(Context mContext, List<Makanan> mData) {
         this.mContext = mContext;
         this.mData = mData;
+        Intent a = ((Activity) mContext).getIntent();
+        this.noMenja = a.getStringExtra("nomeja");
+        this.namaPemesan = a.getStringExtra("namapemesan");
+        this.idKaryawan = a.getStringExtra("idkaryawan");
     }
 
     @Override
@@ -53,6 +61,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         mDialog = new Dialog(mContext);
         mDialog.setContentView(R.layout.dialog_makanan);
 
+        //Toast.makeText(mContext, data1 + data2, Toast.LENGTH_SHORT).show();
+
         holder.button_get.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,8 +72,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 Button btnInputMakanan = mDialog.findViewById(R.id.button_input_makanan);
                 Button btnBatalMakanan = mDialog.findViewById(R.id.button_batal_makanan);
                 final ElegantNumberButton quantitiBtn = mDialog.findViewById(R.id.quantiti_button_makanan);
+
                 dialog_nama_tv.setText(mData.get(position).getNamaMakanan());
-                dialog_stok_tv.setText(mData.get(position).getStokMakanan());
+                dialog_stok_tv.setText("Stok : " + mData.get(position).getStokMakanan());
 
                 btnInputMakanan.setOnClickListener(new View.OnClickListener() {
                     @Override
