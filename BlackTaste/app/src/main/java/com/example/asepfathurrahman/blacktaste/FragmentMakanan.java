@@ -68,7 +68,7 @@ public class FragmentMakanan extends Fragment {
         v = inflater.inflate(R.layout.makanan_fragment,container,false);
 
         Intent a = getActivity().getIntent();
-        String noNeja = a.getStringExtra("nomeja");
+        final String noNeja = a.getStringExtra("nomeja");
         String test2 = a.getStringExtra("namapemesan");
         //Toast.makeText(getActivity(), test, Toast.LENGTH_SHORT).show();
 
@@ -84,6 +84,17 @@ public class FragmentMakanan extends Fragment {
         myrecyclerview.setHasFixedSize(true);
         oneMakanan.clear();
         myrecyclerview.setAdapter(recyclerAdapter);
+
+        linearPrice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent a = new Intent(getActivity(), DetailPesanan.class);
+                a.putExtra("nomeja", noNeja);
+                startActivity(a);
+                getActivity().finish();
+            }
+        });
+
         cari();
 
         getPrice(noNeja);
@@ -128,16 +139,17 @@ public class FragmentMakanan extends Fragment {
                                 double harga    = obj.getDouble("harga_menu");
                                 String stok     = obj.getString("stock_menu");
                                 String foto     = obj.getString("foto_menu");
+                                String idMenu   = obj.getString("id_menu");
 
                                 DecimalFormat kursIndonesia = (DecimalFormat) DecimalFormat.getCurrencyInstance();
                                 DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
 
-                                formatRp.setCurrencySymbol("Rp. ");
+                                formatRp.setCurrencySymbol("");
                                 formatRp.setMonetaryDecimalSeparator(',');
                                 formatRp.setGroupingSeparator('.');
 
                                 kursIndonesia.setDecimalFormatSymbols(formatRp);
-                                oneMakanan.add(new Makanan(nama, kursIndonesia.format(harga), stok, foto));
+                                oneMakanan.add(new Makanan(idMenu, nama, kursIndonesia.format(harga), stok, foto));
                             }
                         }
 

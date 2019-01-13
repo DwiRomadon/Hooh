@@ -122,16 +122,17 @@ public class FragmentMinuman extends Fragment {
                             double harga    = obj.getDouble("harga_menu");
                             String stok     = obj.getString("stock_menu");
                             String foto     = obj.getString("foto_menu");
+                            String idMenu   = obj.getString("id_menu");
 
                             DecimalFormat kursIndonesia = (DecimalFormat) DecimalFormat.getCurrencyInstance();
                             DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
 
-                            formatRp.setCurrencySymbol("Rp. ");
+                            formatRp.setCurrencySymbol("");
                             formatRp.setMonetaryDecimalSeparator(',');
                             formatRp.setGroupingSeparator('.');
 
                             kursIndonesia.setDecimalFormatSymbols(formatRp);
-                            oneMinuman.add(new Minuman(nama, kursIndonesia.format(harga), stok, foto));
+                            oneMinuman.add(new Minuman(idMenu, nama, kursIndonesia.format(harga), stok, foto));
                         }
                     }
 
@@ -202,6 +203,7 @@ public class FragmentMinuman extends Fragment {
         });
     }
 
+
     public void getPrice(final String idMeja){
 
         //Tag used to cancel the request
@@ -233,7 +235,7 @@ public class FragmentMinuman extends Fragment {
                             DecimalFormat kursIndonesia = (DecimalFormat) DecimalFormat.getCurrencyInstance();
                             DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
 
-                            formatRp.setCurrencySymbol("Rp. ");
+                            formatRp.setCurrencySymbol("");
                             formatRp.setMonetaryDecimalSeparator(',');
                             formatRp.setGroupingSeparator('.');
 

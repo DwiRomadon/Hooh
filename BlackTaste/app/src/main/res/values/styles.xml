@@ -18,4 +18,12 @@
         <item name="colorControlActivated">@color/colorPrimary</item>
     </style>
 
+    <style name="HeaderBar">
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+
+    <style name="ToolBarTheme"  parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="colorControlNormal">#FFF</item>
+    </style>
+
 </resources>

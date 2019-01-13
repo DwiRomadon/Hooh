@@ -7,19 +7,25 @@ public class Minuman {
     private String HargaMinuman;
     private String StokMinuman;
     private String FotoMinuman;
+    private String idMenu;
 
     public Minuman() {
     }
 
-    public Minuman(String nama, String harga, String stok, String foto) {
-        NamaMinuman = nama;
-        HargaMinuman = harga;
-        StokMinuman = stok;
-        FotoMinuman = foto;
+
+    public Minuman(String idMenu, String nama, String harga, String stok, String foto) {
+        this.NamaMinuman = nama;
+        this.HargaMinuman = harga;
+        this.StokMinuman = stok;
+        this.FotoMinuman = foto;
+        this.idMenu      = idMenu;
+
     }
 
     //Getter
-
+    public String getIdMenu() {
+        return idMenu;
+    }
 
     public String getNamaMinuman() {
         return NamaMinuman;
@@ -55,4 +61,8 @@ public class Minuman {
     public void setFotoMinuman(String foto) {
         FotoMinuman = foto;
     }
+    public void setIdMenu(String idMenu) {
+        this.idMenu = idMenu;
+    }
+
 }

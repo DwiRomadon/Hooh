@@ -3,16 +3,26 @@ package com.example.asepfathurrahman.blacktaste;
 
 public class Makanan {
 
+    private String idMenu;
     private String NamaMakanan;
     private String HargaMakanan;
     private String StokMakanan;
     private String FotoMakanan;
 
-    public Makanan(String nama, String harga, String stok, String foto) {
+    public Makanan(String idMenu, String nama, String harga, String stok, String foto) {
         this.NamaMakanan = nama;
         this.HargaMakanan = harga;
         this.StokMakanan = stok;
         this.FotoMakanan = foto;
+        this.idMenu      = idMenu;
+    }
+
+    public String getIdMenu() {
+        return idMenu;
+    }
+
+    public void setIdMenu(String idMenu) {
+        this.idMenu = idMenu;
     }
 
     //Getter
