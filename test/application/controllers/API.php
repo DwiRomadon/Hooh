@@ -223,11 +223,9 @@ class API extends CI_Controller {
 		endif;
 		
 	}
-
 	// data pesanan
 
-
-
+    //API Tambahan
     public function login()
     {
         $u      = $this -> input -> post('username');
@@ -246,4 +244,75 @@ class API extends CI_Controller {
 
 
 
+    public function getPretransaksi()
+    {
+        $idMeja         = $this -> input -> post('idMeja');
+        $data['data']   = $this -> Query -> getData(array('id_meja'=>$idMeja),'pre_transaksi') -> result();
+        if($data):
+            $data['status'] = true;
+            $data['msg']	= 'ok';
+        else:
+            $data['status'] = false;
+            $data['msg']	= 'gagal';
+        endif;
+        echo json_encode($data);
+    }
+
+    public function addPreeTransaktion(){
+
+        $idMeja         = $this -> input -> post('idMeja');
+        $idMenu         = $this -> input -> post('idMenu');
+        $qty            = $this -> input -> post('jumbel');
+        $catatan        = $this -> input -> post('catatan');
+        $harga          = $this -> input -> post('harga');
+        $stok           = $this -> input -> post('stok');
+
+        $input = $this -> Query -> inputData(array(	'id_meja'     => $idMeja,
+                                                    'id_menu' 	  => $idMenu,
+                                                    'jumlah_beli' => $qty,
+                                                    'catatan' 	  => $catatan,
+                                                    'price' 	  => $harga,
+                                                    ),
+                                            'pre_transaksi');
+
+        if($input):
+            $this -> Query -> updateData(array('id_menu'=>$idMenu),
+                                         array('stock_menu'=>$stok),'menu');
+            $data['status'] = true;
+            $data['msg']	= 'berhasil menambah kedaftar pesanan';
+        else:
+            $data['status'] = false;
+            $data['msg']	= 'gagal';
+        endif;
+        echo json_encode($data);
+    }
+
+    public function sumCountPreTransaksi(){
+        $idMeja         = $this -> input -> post('idMeja');
+        $data['data']   = $this -> Query -> sum(array('id_meja'=>$idMeja)) -> row();
+        if($data):
+            $data['status'] = true;
+            $data['msg']	= 'ok';
+        else:
+            $data['status'] = false;
+            $data['msg']	= 'gagal';
+        endif;
+        echo json_encode($data);
+    }
+
+
+    public function detailPreTransakti()
+    {
+        $idMeja      = $this -> input -> post('idMeja');
+        $query       = $this -> Query -> getData(array('id_meja'=>$idMeja),'v_pretransaksi') -> result();
+        if($query):
+            $data['status'] = true;
+            $data['msg']	= 'ok';
+            $data['pesanan']   = $query;
+        else:
+            $data['status'] = false;
+            $data['msg']	= 'gagal';
+        endif;
+        echo json_encode($data);
+    }
 }
