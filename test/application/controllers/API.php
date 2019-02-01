@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class API extends CI_Controller {
 
+
 	public function __construct() 
  	{
     	parent::__construct();
@@ -123,7 +124,7 @@ class API extends CI_Controller {
 		$cat 	= $this -> input -> post('catatan');
 		$menu 	= $this -> input -> post('menu[]');
 		$qty 	= $this -> input -> post('menu_qty[]');
-
+		$cat_det= $this -> input -> post('catatan_detail[]');
 		#make sure its not null
 		if(!isset($meja) or !isset($staf)):
 			$data['status'] = 'failed';
@@ -145,10 +146,11 @@ class API extends CI_Controller {
 					$input_pesanan = $this -> Query -> inputDataGetLastID($data_to_input,'transaksi');
 					if($input_pesanan['is_insert'] == true):
 						foreach($menu as $key => $value):
-							$this -> Query -> inputData(array(	'id_transaksi'=>$input_pesanan['id'],
-																'id_menu' 	  => $value,
-																'jumlah_beli' => $qty[$key],
-																'status' 	  => 'wait'
+							$this -> Query -> inputData(array(	'id_transaksi' 	 => $input_pesanan['id'],
+																'id_menu' 	  	 => $value,
+																'jumlah_beli' 	 => $qty[$key],
+																'status' 	  	 => 'wait',
+																'catatan_detail' => $cat_det[$key]
 														),'transaksi_detail');
 						endforeach;
 						$data['status'] = 'ok';
@@ -183,6 +185,26 @@ class API extends CI_Controller {
 		echo json_encode($data);
 	}
 
+	public function pesanan_cancel_all()
+	{
+		$id_trans= $this -> input -> post('id_trans');
+		if(!isset($id_trans) or $id_trans ==''):
+			$data['status'] = 'failed';
+			$data['msg']	= 'id tidak ditemukan.';
+		else:
+			$update = $this -> Query -> updateDataDetail( array('id_trans'=>$id_trans),
+														  array('status_trans'=>'cancel'),'transaksi');
+			if($update['is_query'] == true):
+				$data['status'] = 'ok';
+				$data['msg']	= 'Pesanan berhasil dibatalkan.';
+			else:
+				$data['status'] = 'failed';
+				$data['msg']	= 'Pesanan gagal dibatalkan, kesalahan pada database : '.$update['error'];
+			endif;
+		endif;
+		echo json_encode($data);
+	}
+
 	public function pesanan_selesai()
 	{
 		$id_trans = $this -> input -> post('id_trans');
@@ -191,6 +213,7 @@ class API extends CI_Controller {
 			$data['msg']	= 'id tidak ditemukan.';
 		else:
 			$data_t = $this -> Query -> getData(array('id_transaksi'=>$id_trans),'transaksi_detail') -> result();
+			$update_transaksi = $this -> Query -> updateData(array('id_transaksi'=>$id_trans),array('status_trans'=>'done'),'transaksi');
 			foreach($data_t as $val):
 				$update = $this -> Query -> updateData(array('id_transaksi_detail'=>$val->id_transaksi_detail),
 													   array('status'=>'done'),'transaksi_detail');
@@ -201,6 +224,38 @@ class API extends CI_Controller {
 		endif;
 		echo json_encode($data);
 	}
+
+	public function pesanan_add_menu()
+	{
+		$id_trans = $this -> input -> post('id_trans');
+		$menu 	  = $this -> input -> post('menu[]');
+		$qty 	  = $this -> input -> post('menu_qty[]');
+		$cat_det= $this -> input -> post('catatan_detail[]');
+
+		if($id_trans =='' or empty($id_trans) or !isset($id_trans)):
+			$data['status'] = 'failed';
+			$data['msg']	= 'id tidak ditemukan.';
+		else:
+			$data['transaksi'] = $this -> Query -> getData(array('id_transaksi'=>$id_trans),'transaksi')->row();
+			if(count($data['transaksi'])<1):
+				$data['status'] = 'failed';
+				$data['msg']	= 'Transaksi tidak valid';
+			else:
+				foreach($menu as $key => $value):
+					$this -> Query -> inputData(array(	'id_transaksi'	=> $id_trans,
+														'id_menu' 	  	=> $value,
+														'jumlah_beli' 	=> $qty[$key],
+														'catatan_detail'=> $cat_det[$key],
+														'status' 	  => 'wait'
+												),'transaksi_detail');
+				endforeach;
+				$data['status'] = 'ok';
+				$data['msg']	= 'Pesanan berhasil diupdate.';
+			endif;
+		endif;
+		echo json_encode($data);
+	}
+
 
 	public function updateBahan($id_menu,$qty)
 	{
@@ -268,16 +323,16 @@ class API extends CI_Controller {
         $stok           = $this -> input -> post('stok');
 
         $input = $this -> Query -> inputData(array(	'id_meja'     => $idMeja,
-                                                    'id_menu' 	  => $idMenu,
-                                                    'jumlah_beli' => $qty,
-                                                    'catatan' 	  => $catatan,
-                                                    'price' 	  => $harga,
-                                                    ),
-                                            'pre_transaksi');
+            'id_menu' 	  => $idMenu,
+            'jumlah_beli' => $qty,
+            'catatan' 	  => $catatan,
+            'price' 	  => $harga,
+        ),
+            'pre_transaksi');
 
         if($input):
             $this -> Query -> updateData(array('id_menu'=>$idMenu),
-                                         array('stock_menu'=>$stok),'menu');
+                array('stock_menu'=>$stok),'menu');
             $data['status'] = true;
             $data['msg']	= 'berhasil menambah kedaftar pesanan';
         else:
@@ -315,4 +370,94 @@ class API extends CI_Controller {
         endif;
         echo json_encode($data);
     }
+
+
+    public function hapusPesanan(){
+        $id          = $this -> input -> post('id');
+        $idMenu      = $this -> input -> post('idMenu');
+        $stok        = $this -> input -> post('stok');
+
+        $query       = $this -> Query -> delData(array('id'=>$id),'pre_transaksi');
+
+        if($query):
+            $this -> Query -> updateData(array('id_menu'=>$idMenu),
+                array('stock_menu'=>$stok),'menu');
+            $data['status']     = true;
+            $data['msg']	    = 'Data berhasil dihapus';
+        else:
+            $data['status'] = false;
+            $data['msg']	= 'gagal';
+        endif;
+        echo json_encode($data);
+    }
+
+    public function getStok(){
+        $idMenu      = $this -> input -> post('idMenu');
+        $query       = $this -> Query -> getData(array('id_menu'=>$idMenu),'menu') -> row();
+        if($query):
+            $data['status']     = true;
+            $data['msg']	    = 'berhasil mengambil data';
+            $data['stok']       = $query->stock_menu;
+        else:
+            $data['status']     = false;
+            $data['msg']	    = 'Data berhasil dihapus';
+        endif;
+        echo json_encode($data);
+    }
+
+	public function inputPesanan()
+	{
+		$meja 	    = $this -> input -> post('meja');
+		$staf	    = $this -> input -> post('staf');
+        $totbayar 	= $this -> input -> post('total_bayar');
+		#make sure its not null
+		if(!isset($meja) or !isset($staf)):
+			$data['status'] = 'failed';
+			$data['msg']	= 'Data meja dan staf login tidak ditemukan';
+		else:
+            $data_to_input = array('id_karyawan'=> $staf,
+                    'id_meja'	=> $meja,
+                    'catatan'	=> null,
+                    'tgl_transaksi' => date('Y-m-d H:i:s'),
+                    'total_bayar'=> $totbayar,
+                    'status_trans'=>'wait'
+            );
+            $input_pesanan = $this -> Query -> inputDataGetLastID($data_to_input,'transaksi');
+            if($input_pesanan):
+                $data['status'] = true;
+                $data['msg']	= 'OK';
+            else:
+                $data['status'] = false;
+                $data['msg']	= 'gagal';
+            endif;
+		endif;
+		echo json_encode($data);
+	}
+
+	public function transaksiDetail(){
+
+        $data_to_input = $this -> Query -> selectMax('transaksi')->row();
+
+        $idMenu 	    = $this -> input -> post('idMenu');
+        $jumbel         = $this -> input -> post('jumbel');
+        $catatan        = $this -> input -> post('catatan');
+
+        $insert = $this -> Query -> inputData(array(	'id_transaksi' 	 => $data_to_input->id_transaksi,
+            'id_menu' 	  	 => $idMenu,
+            'jumlah_beli' 	 => $jumbel,
+            'catatan_detail' => $catatan,
+            'status' 	  	 => 'wait'
+            ),'transaksi_detail');
+
+        if ($insert):
+            $this -> Query -> delData(array('id_menu'=>$idMenu),'pre_transaksi');
+            $data['status'] = true;
+            $data['msg']    = "Berhasil Input Data";
+        else:
+            $data['status'] = false;
+            $data['msg']	= 'gagal input error pada database : ';
+        endif;
+        echo json_encode($data);
+    }
 }
+

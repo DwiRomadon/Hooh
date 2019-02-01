@@ -69,6 +69,8 @@ public class FragmentMakanan extends Fragment {
 
         Intent a = getActivity().getIntent();
         final String noNeja = a.getStringExtra("nomeja");
+        final String idKaryawan = a.getStringExtra("idkaryawan");
+        //Toast.makeText(getActivity(), idKaryawan, Toast.LENGTH_LONG).show();
         String test2 = a.getStringExtra("namapemesan");
         //Toast.makeText(getActivity(), test, Toast.LENGTH_SHORT).show();
 
@@ -90,6 +92,7 @@ public class FragmentMakanan extends Fragment {
             public void onClick(View v) {
                 Intent a = new Intent(getActivity(), DetailPesanan.class);
                 a.putExtra("nomeja", noNeja);
+                a.putExtra("idKaryawan", idKaryawan);
                 startActivity(a);
                 getActivity().finish();
             }

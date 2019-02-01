@@ -107,8 +107,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                         String convertHarga = mData.get(position).getHargaMakanan().replace(".", "");
                         double harga = Double.parseDouble(convertHarga) * Double.parseDouble(quantitiBtn.getNumber());
 
-                        inputDataAndUpdateStock(noMenja, mData.get(position).getIdMenu(),
-                                quantitiBtn.getNumber(), catat, String.valueOf(stoknya), String.valueOf(harga));
+                        String quantiti = quantitiBtn.getNumber();
+
+                        if (quantiti.equals("0")){
+                            Toast.makeText(mContext, "Isi jumlah beli", Toast.LENGTH_LONG).show();
+                        }else {
+                            inputDataAndUpdateStock(noMenja, mData.get(position).getIdMenu(),
+                                    quantitiBtn.getNumber(), catat, String.valueOf(stoknya), String.valueOf(harga));
+                        }
+
                     }
                 });
 

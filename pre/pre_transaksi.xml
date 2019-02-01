@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+- phpMyAdmin XML Dump
+- version 4.8.4
+- https://www.phpmyadmin.net
+-
+- Host: localhost
+- Generation Time: Jan 24, 2019 at 11:05 AM
+- Server version: 10.1.37-MariaDB
+- PHP Version: 7.0.33
+-->
+
+<pma_xml_export version="1.0" xmlns:pma="https://www.phpmyadmin.net/some_doc_url/">
+    <!--
+    - Structure schemas
+    -->
+    <pma:structure_schemas>
+        <pma:database name="resto" collation="latin1_swedish_ci" charset="latin1">
+            <pma:table name="pre_transaksi">
+                CREATE TABLE `pre_transaksi` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `id_meja` int(11) NOT NULL,
+                  `id_menu` int(11) NOT NULL,
+                  `jumlah_beli` int(11) NOT NULL,
+                  `catatan` varchar(255) NOT NULL,
+                  `price` decimal(10,0) NOT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+            </pma:table>
+        </pma:database>
+    </pma:structure_schemas>
+
+    <!--
+    - Database: 'resto'
+    -->
+    <database name="resto">
+        <!-- Table pre_transaksi -->
+    </database>
+</pma_xml_export>

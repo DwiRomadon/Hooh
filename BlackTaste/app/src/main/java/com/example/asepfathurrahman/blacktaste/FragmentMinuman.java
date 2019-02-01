@@ -66,7 +66,8 @@ public class FragmentMinuman extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.minuman_fragment,container,false);
         Intent a = getActivity().getIntent();
-        String noNeja = a.getStringExtra("nomeja");
+        final String noNeja = a.getStringExtra("nomeja");
+        final String idKaryawan = a.getStringExtra("idkaryawan");
         String test2 = a.getStringExtra("namapemesan");
 
         myrecyclerview = (RecyclerView) v.findViewById(R.id.minuman_recyclerview);
@@ -79,6 +80,17 @@ public class FragmentMinuman extends Fragment {
         oneMinuman.clear();
         myrecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         myrecyclerview.setAdapter(recyclerAdapter);
+
+        linearPrice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent a = new Intent(getActivity(), DetailPesanan.class);
+                a.putExtra("nomeja", noNeja);
+                a.putExtra("idKaryawan", idKaryawan);
+                startActivity(a);
+                getActivity().finish();
+            }
+        });
         cari();
         getPrice(noNeja);
         return v;

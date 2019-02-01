@@ -43,6 +43,7 @@
             android:id="@+id/quantiti_button_makanan"
             android:layout_width="80dp"
             android:layout_height="25dp"
+            app:initialNumber="1"
             android:layout_marginTop="5dp"></com.cepheuen.elegantnumberbutton.view.ElegantNumberButton>
 
         <TextView
