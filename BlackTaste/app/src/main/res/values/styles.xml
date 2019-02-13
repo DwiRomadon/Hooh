@@ -18,6 +18,16 @@
         <item name="colorControlActivated">@color/colorPrimary</item>
     </style>
 
+    <style name="TextLabel2" parent="Widget.Design.TextInputLayout">
+        <!-- Hint color and label color in FALSE state -->
+        <item name="android:textColorHint">#FFF</item>
+        <item name="android:textSize">20sp</item>
+        <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
+        <item name="colorAccent">#FFF</item>
+        <item name="colorControlNormal">#FFF</item>
+        <item name="colorControlActivated">#FFF</item>
+    </style>
+
     <style name="HeaderBar">
         <item name="android:background">@color/colorPrimary</item>
     </style>

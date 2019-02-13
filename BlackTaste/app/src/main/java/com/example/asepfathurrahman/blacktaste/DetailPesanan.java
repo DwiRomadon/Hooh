@@ -402,6 +402,7 @@ public class DetailPesanan extends AppCompatActivity {
                 myDialog.setContentView(R.layout.popup);
                 TextView txtclose;
                 txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
+
                 txtclose.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

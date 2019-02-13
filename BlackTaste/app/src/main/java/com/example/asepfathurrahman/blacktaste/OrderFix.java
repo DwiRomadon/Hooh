@@ -92,6 +92,7 @@ public class OrderFix extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     }
+                    Toast.makeText(getApplicationContext(), "Berhasil memesan", Toast.LENGTH_LONG).show();
                     //if(status == false){
 
                    // }
@@ -148,14 +149,14 @@ public class OrderFix extends AppCompatActivity {
                     JSONObject jObj = new JSONObject(response);
                     boolean status = jObj.getBoolean("status");
 
-                    if(status == true){
+                    /*if(status == true){
                         String msg          = jObj.getString("msg");
                         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
                     }else {
                         String error_msg = jObj.getString("msg");
                         Toast.makeText(getApplicationContext(), error_msg, Toast.LENGTH_LONG).show();
 
-                    }
+                    }*/
 
                 }catch (JSONException e){
                     //JSON error

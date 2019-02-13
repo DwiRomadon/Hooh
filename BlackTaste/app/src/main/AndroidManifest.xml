@@ -27,7 +27,8 @@
         <activity android:name=".InputNomerMeja" />
         <activity android:name=".MainActivity" />
         <activity android:name=".DetailPesanan" />
-        <activity android:name=".OrderFix"></activity>
+        <activity android:name=".OrderFix" />
+        <activity android:name=".ListPesananDetail"></activity>
     </application>
 
 </manifest>
