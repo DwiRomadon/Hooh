@@ -70,9 +70,7 @@ public class FragmentMakanan extends Fragment {
         Intent a = getActivity().getIntent();
         final String noNeja = a.getStringExtra("nomeja");
         final String idKaryawan = a.getStringExtra("idkaryawan");
-        //Toast.makeText(getActivity(), idKaryawan, Toast.LENGTH_LONG).show();
-        String test2 = a.getStringExtra("namapemesan");
-        //Toast.makeText(getActivity(), test, Toast.LENGTH_SHORT).show();
+        String idTransaksi = a.getStringExtra("idtransaksi");
 
         myrecyclerview = (RecyclerView) v.findViewById(R.id.makanan_recyclerview);
         //TextView text = (TextView) v.findViewById(R.id.txtTest);

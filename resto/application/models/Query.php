@@ -97,6 +97,25 @@ class Query extends CI_Model{
         return $this->db->get();
     }
 
+    function getDataJoinOrderWhere($table1,$table2,$field,$order,$where){
+        $this->db->select('*');
+        $this->db->from($table1);
+        $this->db->join($table2, $table1.'.'.$field.'='.$table2.'.'.$field);
+        $this->db->where($where);
+        $this->db->order_by($order);
+        return $this->db->get();
+    }
+
+    function getDataTransWait()
+    {
+        $this->db->select('*')
+                 ->from('transaksi')
+                 ->join('meja','meja.id_meja = transaksi.id_meja','left')
+                 ->where(array('status_trans'=>'wait'))
+                 ->order_by("tgl_transaksi DESC");
+        return $this -> db -> get();
+    }
+
     function getDataJoinWhere($table1,$table2,$field,$where){
         $this->db->select('*');
         $this->db->from($table1);
@@ -151,5 +170,73 @@ class Query extends CI_Model{
                  -> order_by('transaksi.tgl_transaksi','desc');
         return $this -> db -> get(); 
    }
+
+  function getDataMenuFromTransWhere($where)
+   {
+        $this->db-> select('*')
+                 -> from('transaksi_detail')
+                 -> join('menu','transaksi_detail.id_menu = menu.id_menu','left')
+                 -> join('transaksi','transaksi_detail.id_transaksi = transaksi.id_transaksi','left')
+                 -> order_by('transaksi.tgl_transaksi','desc')
+                 -> where($where);  
+        return $this -> db -> get(); 
+   }
+
+   function GetDataTransaksiDetail($where)
+   {
+        $this->db-> select('*')
+                 -> from('transaksi_detail')
+                 -> join('menu','transaksi_detail.id_menu = menu.id_menu','left')
+                 -> join('transaksi','transaksi_detail.id_transaksi = transaksi.id_transaksi','left')
+                 -> order_by('transaksi.tgl_transaksi','desc')
+                 -> where($where);  
+        return $this -> db -> get(); 
+   }
+
+   function getDataTransaksiFilter($tgl_mulai,$tgl_selesai)
+   {
+        $this->db -> select('*')
+                  -> from('transaksi')
+                  -> join('meja','transaksi.id_meja = meja.id_meja','left')
+                  -> order_by('transaksi.tgl_transaksi','desc')
+                  -> where('tgl_transaksi BETWEEN "'.$tgl_mulai. '" AND "'.$tgl_selesai.'"');
+        return $this -> db -> get(); 
+   }
+
+    function sum($where)
+    {
+        $this->db->select_sum('price');
+        $this->db->select('sum(jumlah_beli) as count');
+        $this->db->from('pre_transaksi');
+        $this->db->where($where);
+        return $this->db->get();
+    }
+
+    public function orderByLimit($table,$field,$sort,$limit){
+        $this->db->select('id_transaksi')
+            ->from($table)
+            ->order_by($field,$sort)
+            ->limit($limit);
+        return $this->db->get();
+    }
+
+
+    function getLast($table){
+        $data = $this -> db -> select('id_transaksi')
+                        ->from($table);
+        $get_id = $this-> db ->query('SELECT LAST_INSERT_ID() AS "last_id" ')->row();
+        $id = $get_id -> last_id;
+        $error = $this->db->error();
+        $ret_array = array('id_transaksi'=>$id,'is_insert'=>$data,'error'=>$error);
+        return $ret_array;
+    }
+
+
+    function selectMax($table, $where)
+    {
+        $this -> db -> select_max('id_transaksi')
+            -> from($table);
+        return $this -> db -> get();
+    }
 
 }

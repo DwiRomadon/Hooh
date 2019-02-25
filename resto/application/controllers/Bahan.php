@@ -69,6 +69,22 @@ class Bahan extends CI_Controller {
 		$this->load->view('Template',$data);
 	}
 
+	public function daftar_belanja()
+	{
+		$data['web'] 	= array( 'title'	  => 'Daftar belanja | Inventori Resto',
+								 'aktif_menu' => 'belanja',
+								 'page'		  => 'Bahan_belanja.php',
+								 'is_trview'  => false,
+								 'is_table'	  => true,
+								);
+		$data['user']	= array( 'name' 	  => $this -> user_name,
+								 'level'	  => $this -> user_level	
+								);
+		$data['breadcrumb'] = array('Kategori');
+		$data['table']	= $this -> Query -> getDataJoinOrderWhere('bahan','satuan','id_satuan','nama_bahan ASC','stock_bahan <= stock_minimal') -> result();
+		$this->load->view('Template',$data);
+	}
+
 	public function add()
 	{
 		$data['web'] 	= array( 'title'	  => 'Tambah data bahan | Inventori Resto',
@@ -89,11 +105,13 @@ class Bahan extends CI_Controller {
 			$nama 		= $this -> input -> post("nama");
 			$satuan 	= $this -> input -> post("satuan");
 			$stock 		= $this -> input -> post("stock");
+			$stock_min 	= $this -> input -> post("stock_minimal");
 			$harga 		= $this -> input -> post("harga");
 			$catatan 	= $this -> input -> post("catatan");
 			$input_data = $this -> Query -> inputData(array( 'nama_bahan'=>$nama,
 															 'harga_bahan'=>$harga,
 															 'stock_bahan'=>$stock,
+															 'stock_minimal'=>$stock_min,
 															 'catatan_bahan'=>$catatan,
 															 'id_satuan' => $satuan,
 															 'tgl_input_bahan'=> date('Y-m-d H:i:s')
@@ -138,12 +156,14 @@ class Bahan extends CI_Controller {
 					$nama 		= $this -> input -> post("nama");
 					$satuan 	= $this -> input -> post("satuan");
 					$stock 		= $this -> input -> post("stock");
+					$stock_min 	= $this -> input -> post("stock_minimal");
 					$harga 		= $this -> input -> post("harga");
 					$catatan 	= $this -> input -> post("catatan");
 					$query  	= $this -> Query -> updateData( array('id_bahan'=>$id),
 																array( 	 'nama_bahan'=>$nama,
 																		 'harga_bahan'=>$harga,
 																		 'stock_bahan'=>$stock,
+																		 'stock_minimal'=>$stock_min,
 																		 'catatan_bahan'=>$catatan,
 																		 'id_satuan' => $satuan
 																 	),

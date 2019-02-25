@@ -47,11 +47,11 @@
                   </div>
                   <div class="form-group">
                     <label>Harga jual (rupiah)</label>
-                    <input class="form-control" placeholder="(hanya angka) Contoh : 12500" type="number" required="" name="harga" value="<?php echo $data->harga_menu?>">
+                    <input class="form-control" placeholder="(hanya angka) Contoh : 12500" type="number" required="" name="harga" value="<?php echo $data->harga_menu?>" min="0">
                   </div>
                   <div class="form-group">
                     <label>Stock (pcs)</label>
-                    <input class="form-control" placeholder="(hanya angka) Contoh : 12" type="number" required="" name="stock" value="<?php echo $data->stock_menu?>">
+                    <input class="form-control" placeholder="(hanya angka) Contoh : 12" type="number" required="" name="stock" value="<?php echo $data->stock_menu?>" min="0">
                   </div>
                   
                   <div class="form-group">
@@ -107,6 +107,7 @@
                          placeholder="jumlah" 
                          pattern="[0-9]+([\,|\.][0-9]+)?" 
                          step="any" 
+                         min="0"
                          value="<?php echo $bhn->quantity?>"
                          title="input dapat berupa angka / pecahan, gunakan tanda comma (,) atau titik(.) jika input berupa pecahan.">
                   <span class="input-group-addon bahan_satuan_<?php echo $no;?>"><?php echo $bhn->nama_satuan;?></span>
@@ -136,7 +137,7 @@
                       <i class="glyphicon glyphicon-repeat"></i>
                       RESET
                     </button>
-                    <button type="reset" class="btn btn-default pull-right">
+                    <button onclick="window.history.go(-1); return false;" type="reset" class="btn btn-default pull-right">
                       <i class="glyphicon glyphicon-chevron-left"></i>
                       KEMBALI
                     </button>

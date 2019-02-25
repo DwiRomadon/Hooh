@@ -55,11 +55,20 @@ class Admin extends CI_Controller {
 
 	public function index()
 	{
+		$page = null;
+		if($this -> user_level == 'chef' or $this->user_level == 'waiter')
+		{
+			$page ="Other_beranda.php";
+		}
+		else
+		{
+			$page ="Admin_beranda.php";
+		}
 		$data['web'] 	= array( 'title'	  => 'Beranda admin | Inventori Resto',
 								 'aktif_menu' => 'home',
 								 'header'	  => 'Beranda',
 								 'sub_header' => '',
-								 'page'		  => 'Admin_beranda.php',
+								 'page'		  => $page,
 								 'is_trview'  => false,
 								 'is_table'   => false
 								);

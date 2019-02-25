@@ -13,7 +13,7 @@
       <?php endif; ?>
 
   		<div class="content-box-large heading">
-			<div class="panel-title">Ubah profil</div>
+			<div class="panel-title">Ubah data resto</div>
   			 <div class="panel-body">
           <div class="row">
             <div class="col-md-12">
@@ -29,7 +29,7 @@
                   </div> 
                   <div class="form-group">
                     <label>Alamat resto</label>
-                    <textarea class="form-control" rows="4"><?php echo $edit->alamat_resto;  ?></textarea>
+                    <textarea class="form-control" rows="4" name="alamat"><?php echo $edit->alamat_resto;  ?></textarea>
                   </div> 
                   
                 </fieldset>
@@ -42,7 +42,7 @@
                       <i class="glyphicon glyphicon-repeat"></i>
                       RESET
                     </button>
-                    <button type="reset" class="btn btn-default pull-right">
+                  <button onclick="window.history.go(-1); return false;" type="reset" class="btn btn-default pull-right">
                       <i class="glyphicon glyphicon-chevron-left"></i>
                       KEMBALI
                     </button>

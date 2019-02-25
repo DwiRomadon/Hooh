@@ -6,7 +6,10 @@
                         </a>
                     </li>
                     <li id="pesanan">
-                        <a href="<?php echo base_url('pesanan');?>"><i class="glyphicon glyphicon-shopping-cart"></i> Daftar pesanan</a>
+                        <a href="<?php echo base_url('pesanan_kasir');?>"><i class="glyphicon glyphicon-shopping-cart"></i> Daftar pesanan</a>
+                    </li>
+                     <li id="belanja">
+                        <a href="<?php echo base_url('bahan/daftar_belanja');?>"><i class="glyphicon glyphicon-briefcase"></i> Daftar belanja</a>
                     </li>
                     <li id="master_data" class="submenu <?php if($web['is_trview'] == true){echo "open";}?>">
                          <a href="#">
@@ -15,7 +18,9 @@
                          </a>
                          <!-- Sub menu -->
                          <ul>
+
                             <li id="data_menu"><a href="<?php echo base_url('menu');?>">Data Menu</a></li>
+                            <li id="data_transaksi"><a href="<?php echo base_url('transaksi');?>">Data Transaksi</a></li>
                             <li id="data_kategori"><a href="<?php echo base_url('kategori');?>">Data Kategori</a></li>
                             <li id="data_bahan"><a href="<?php echo base_url('bahan');?>">Data Bahan</a></li>
                             <li id="data_satuan"><a href="<?php echo base_url('satuan');?>">Data Satuan</a></li>

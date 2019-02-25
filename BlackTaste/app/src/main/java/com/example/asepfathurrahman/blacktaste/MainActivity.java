@@ -110,8 +110,6 @@ public class MainActivity extends AppCompatActivity {
 
                         if (strNoMeja.equals("-- Pilih Nomor Meja --")){
                             Toast.makeText(getApplicationContext(), "Silahkan input nomor meja", Toast.LENGTH_SHORT).show();
-                        }else if(strNamaPemesan.isEmpty()){
-                            Toast.makeText(getApplicationContext(), "Silahkan input Nama Pemesan", Toast.LENGTH_SHORT).show();
                         }else {
                             Intent i = new Intent(MainActivity.this, DaftarMenu.class);
                             i.putExtra("nomeja", parts[1]);

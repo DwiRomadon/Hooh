@@ -64,6 +64,7 @@ class Login extends CI_Controller {
 				$this -> session -> set_userdata($session);
 				$this -> flsh_msg('Welcome','ok','Selamat datang '.$verif->nama_karyawan);
 				redirect(base_url());
+				// print_r($session);
 		endif;
 	}
 

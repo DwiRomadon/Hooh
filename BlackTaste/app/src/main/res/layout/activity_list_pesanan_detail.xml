@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".ListPesananDetail">
 
     <android.support.v7.widget.Toolbar
@@ -12,7 +13,8 @@
         android:layout_height="?attr/actionBarSize"
         style="@style/HeaderBar"
         android:theme="@style/ToolBarTheme"
-        android:elevation="4dp"/>
+        android:elevation="4dp">
+    </android.support.v7.widget.Toolbar>
 
     <ListView
         android:id="@+id/array_list"
@@ -24,4 +26,14 @@
         android:descendantFocusability="blocksDescendants"
         android:dividerHeight="5.0sp"/>
 
-</android.support.constraint.ConstraintLayout>
+    <ImageView
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:background="@drawable/cerclebackgroundyello"
+        android:src="@drawable/ic_add_black_24dp"
+        android:padding="10dp"
+        android:id="@+id/viewTambahPesanan"
+        android:layout_margin="18dp"
+        android:layout_gravity="bottom|end"/>
+
+</android.support.design.widget.CoordinatorLayout>

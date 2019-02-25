@@ -29,6 +29,8 @@
         <activity android:name=".DetailPesanan" />
         <activity android:name=".OrderFix" />
         <activity android:name=".ListPesananDetail"></activity>
+        <activity android:name=".tambahpesanan.DaftarMenuTambah"
+            android:windowSoftInputMode="stateHidden"></activity>
     </application>
 
 </manifest>

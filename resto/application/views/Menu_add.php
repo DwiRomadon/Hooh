@@ -39,11 +39,11 @@
                   </div>
                   <div class="form-group">
                     <label>Harga jual (rupiah)</label>
-                    <input class="form-control" placeholder="(hanya angka) Contoh : 12500" type="number" required="" name="harga">
+                    <input class="form-control" placeholder="(hanya angka) Contoh : 12500" type="number" required="" name="harga" min="0">
                   </div>
                    <div class="form-group">
                     <label>Stock menu (pcs)</label>
-                    <input class="form-control" placeholder="(hanya angka) Contoh : 15" type="number" required="" name="stock">
+                    <input class="form-control" placeholder="(hanya angka) Contoh : 15" type="number" required="" name="stock" min="0">
                   </div>
 
                   <div class="form-group">
@@ -81,7 +81,7 @@
                       <i class="glyphicon glyphicon-repeat"></i>
                       RESET
                     </button>
-                    <button type="reset" class="btn btn-default pull-right">
+                  <button onclick="window.history.go(-1); return false;" type="reset" class="btn btn-default pull-right">
                       <i class="glyphicon glyphicon-chevron-left"></i>
                       KEMBALI
                     </button>

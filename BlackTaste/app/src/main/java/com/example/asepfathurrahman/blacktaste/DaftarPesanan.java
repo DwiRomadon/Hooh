@@ -72,6 +72,8 @@ public class DaftarPesanan extends AppCompatActivity {
                 // TODO Auto-generated method stub
                 Intent intent = new Intent(DaftarPesanan.this, ListPesananDetail.class);
                 intent.putExtra("idtransaksi", dataNya.get(position).getIdTransaksi());
+                intent.putExtra("idkaryawan", dataNya.get(position).getIdKaryawan());
+                intent.putExtra("nomeja", dataNya.get(position).getIdMeja());
                 startActivity(intent);
                 finish();
             }
@@ -141,13 +143,14 @@ public class DaftarPesanan extends AppCompatActivity {
 
                             kursIndonesia.setDecimalFormatSymbols(formatRp);
 
-                            if(!statusTransaksi.equals("done") && !statusTransaksi.equals("cancel")){
+                            if(statusTransaksi.equals("wait")){
                                 dataNya.add(new com.example.asepfathurrahman.blacktaste.data.DaftarPesanan(idTransaksi, idKaryawan, idMMeja, kursIndonesia.format(totalBayar), statusTransaksi, namaKaryawan));
-                            }else {
-                                Intent a = new Intent(DaftarPesanan.this, MainActivity.class);
-                                startActivity(a);
-                                finish();
                             }
+                            //else {
+                            //    Intent a = new Intent(DaftarPesanan.this, MainActivity.class);
+                            //    startActivity(a);
+                            //    finish();
+                            //}
                         }
                     }else {
                         Intent a = new Intent(DaftarPesanan.this, MainActivity.class);

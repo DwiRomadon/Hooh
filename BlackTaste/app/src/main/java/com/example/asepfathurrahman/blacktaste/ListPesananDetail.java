@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +35,7 @@ import com.example.asepfathurrahman.blacktaste.adapter.AdapterDetailTransaksi;
 import com.example.asepfathurrahman.blacktaste.data.DetailTransaksi;
 import com.example.asepfathurrahman.blacktaste.server.AppController;
 import com.example.asepfathurrahman.blacktaste.server.Config_URL;
+import com.example.asepfathurrahman.blacktaste.tambahpesanan.DaftarMenuTambah;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -64,9 +66,11 @@ public class ListPesananDetail extends AppCompatActivity {
     AdapterDetailTransaksi adapter;
     ListView list;
 
-    String idTransaksi;
+    String idTransaksi, idKaryawan, noMeja;
 
     Dialog myDialog;
+
+    ImageView imgTambahMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +89,8 @@ public class ListPesananDetail extends AppCompatActivity {
 
         Intent a    = getIntent();
         idTransaksi = a.getStringExtra("idtransaksi");
-
+        idKaryawan  = a.getStringExtra("idkaryawan");
+        noMeja      = a.getStringExtra("nomeja");
 
         list = (ListView) findViewById(R.id.array_list);
         //dataNya.clear();
@@ -94,6 +99,21 @@ public class ListPesananDetail extends AppCompatActivity {
         list.setAdapter(adapter);
 
         myDialog = new Dialog(this);
+
+        imgTambahMenu = (ImageView) findViewById(R.id.viewTambahPesanan);
+
+        imgTambahMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(ListPesananDetail.this, DaftarMenuTambah.class);
+                i.putExtra("nomeja", noMeja);
+                i.putExtra("idtransaksi", idTransaksi);
+                i.putExtra("idkaryawan", idKaryawan);
+                startActivity(i);
+                finish();
+
+            }
+        });
 
         data(idTransaksi);
         fungsiDialog();
@@ -227,7 +247,7 @@ public class ListPesananDetail extends AppCompatActivity {
 
                 EditText namaMakanan = myDialog.findViewById(R.id.namaMakanan);
                 final EditText jumbel      = myDialog.findViewById(R.id.jumlahBeli);
-                EditText catatan     = myDialog.findViewById(R.id.catatan);
+                final EditText catatan     = myDialog.findViewById(R.id.catatan);
                 final EditText harga       = myDialog.findViewById(R.id.harga);
                 final EditText totHarga    = myDialog.findViewById(R.id.totalHarga);
 
@@ -250,6 +270,7 @@ public class ListPesananDetail extends AppCompatActivity {
                 final String[] intJumbel = new String[1];
                 final String[] intHarga = new String[1];
                 final int[] intTotHarga = new int[1];
+
                 jumbel.addTextChangedListener(new TextWatcher() {
 
                     public void afterTextChanged(Editable s) {}
@@ -270,36 +291,58 @@ public class ListPesananDetail extends AppCompatActivity {
                             totHarga.setEnabled(false);
 
                             int hitStok = Integer.parseInt(jumbel.getText().toString());
-                            final int stoksUntukEdit = Integer.parseInt(dataNya.get(position).getStok()) - hitStok;
 
                             int intConvertIntText = Integer.parseInt(text[0]);
                             int intConvertJumbel  = Integer.parseInt(dataNya.get(position).getJumlahBeli());
 
-                            final int grandtotal;
+                            final int hitGrandTotal;
 
                             if(intConvertIntText > intConvertJumbel){
-                                grandtotal =  Integer.parseInt(dataNya.get(position).getGrandTot()) * intConvertIntText;
-                                //Toast.makeText(getApplicationContext(), String.valueOf(total), Toast.LENGTH_LONG).show();
+                                int totalJumbel = Integer.parseInt(totHarga.getText().toString());
+                                final int hitTotAwal = Integer.parseInt(dataNya.get(position).getGrandTot()) - Integer.parseInt(dataNya.get(position).getTotalHarga());
+                                hitGrandTotal =  hitTotAwal + totalJumbel;
+                                //Toast.makeText(getApplicationContext(), String.valueOf(hitGrandTotal), Toast.LENGTH_LONG).show();
+                                final int stoksUntukEdit = Integer.parseInt(dataNya.get(position).getStok()) - hitStok;
+                                btnEdit2.setVisibility(View.GONE);
+                                btnEdit.setVisibility(View.VISIBLE);
+
+                                btnEdit.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+
+                                        String catat = catatan.getText().toString();
+                                        String jumbels = jumbel.getText().toString();
+
+                                        editPesanan(dataNya.get(position).getIdTransaksiDetail(),dataNya.get(position).getIdMenu()
+                                                ,String.valueOf(stoksUntukEdit),String.valueOf(hitGrandTotal),dataNya.get(position).getIdTransaksi(),
+                                                catat,jumbels);
+                                    }
+                                });
                             }else if(intConvertIntText == intConvertJumbel){
-                                grandtotal = Integer.parseInt(dataNya.get(position).getGrandTot());
+                                hitGrandTotal = Integer.parseInt(dataNya.get(position).getGrandTot());
                             }else {
+                                int totalJumbel = Integer.parseInt(totHarga.getText().toString());
+                                final int hitTotAwal = Integer.parseInt(dataNya.get(position).getGrandTot()) - Integer.parseInt(dataNya.get(position).getTotalHarga());
+                                hitGrandTotal =  hitTotAwal + totalJumbel;
+                                //Toast.makeText(getApplicationContext(), String.valueOf(hitGrandTotal), Toast.LENGTH_LONG).show();
+                                final int stoksUntukEdit = Integer.parseInt(dataNya.get(position).getStok()) + hitStok;
 
-                                //int hargaTotharga = Integer.parseInt(dataNya.get(position).getHarga()) * Integer.parseInt(text[0]);
-                                //int hasil         = Integer.parseInt(dataNya.get(position).getGrandTot()) - hargaTotharga;
-                                //Toast.makeText(getApplicationContext(), String.valueOf(total), Toast.LENGTH_LONG).show();
+                                btnEdit2.setVisibility(View.GONE);
+                                btnEdit.setVisibility(View.VISIBLE);
+
+                                btnEdit.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+
+                                        String catat = catatan.getText().toString();
+                                        String jumbels = jumbel.getText().toString();
+
+                                        editPesanan(dataNya.get(position).getIdTransaksiDetail(),dataNya.get(position).getIdMenu()
+                                                ,String.valueOf(stoksUntukEdit),String.valueOf(hitGrandTotal),dataNya.get(position).getIdTransaksi(),
+                                                catat,jumbels);
+                                    }
+                                });
                             }
-
-                            btnEdit2.setVisibility(View.GONE);
-                            btnEdit.setVisibility(View.VISIBLE);
-
-                            btnEdit.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-
-                                    /*editPesanan(dataNya.get(position).getIdTransaksiDetail(),dataNya.get(position).getIdMenu()
-                                            ,String.valueOf(stoksUntukEdit),String.valueOf(grandtotal));*/
-                                }
-                            });
                         }
                     }
                 });
@@ -339,9 +382,13 @@ public class ListPesananDetail extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                                    /*editPesanan(dataNya.get(position).getIdTransaksiDetail(),dataNya.get(position).getIdMenu()
-                                            ,String.valueOf(stoksUntukEdit),);*/
-                        Toast.makeText(getApplicationContext(), "Ini Button untuk catatan", Toast.LENGTH_LONG).show();
+                        String catat = catatan.getText().toString();
+                        String jumbels = jumbel.getText().toString();
+
+                        editPesanan(dataNya.get(position).getIdTransaksiDetail(),dataNya.get(position).getIdMenu()
+                                ,dataNya.get(position).getStok(),dataNya.get(position).getGrandTot(),dataNya.get(position).getIdTransaksi(),
+                                catat,jumbels);
+                        //Toast.makeText(getApplicationContext(), "Ini Button untuk catatan", Toast.LENGTH_LONG).show();
 
                     }
                 });
@@ -377,8 +424,8 @@ public class ListPesananDetail extends AppCompatActivity {
                     boolean status = jObj.getBoolean("status");
 
                     if(status == true){
-                        String msg          = jObj.getString("msg");
-                        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                        //String msg          = jObj.getString("msg");
+                        Toast.makeText(getApplicationContext(), "Berhasil dirubah", Toast.LENGTH_LONG).show();
                         Intent a = new Intent(getApplicationContext(), ListPesananDetail.class);
                         a.putExtra("idtransaksi", idTransaksi);
                         startActivity(a);

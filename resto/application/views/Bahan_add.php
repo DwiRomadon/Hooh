@@ -24,11 +24,16 @@
                   </div>
                   <div class="form-group">
                     <label>Harga</label>
-                    <input class="form-control" placeholder="Contoh: 22000, *hanya angka" type="number" required="" name="harga">
+                    <input class="form-control" placeholder="Contoh: 22000, *hanya angka" type="number" required="" name="harga" min="0">
                   </div>
                   <div class="form-group">
                     <label>Stock</label>
-                    <input class="form-control" placeholder="Contoh: 10, *hanya angka" type="number" required="" name="stock">
+                    <input class="form-control" placeholder="Contoh: 10, *hanya angka" type="number" required="" name="stock" min="0">
+                  </div>
+                   <div class="form-group">
+                    <label>Stock minimal</label>
+                    <input class="form-control" placeholder="Contoh: 10, *hanya angka" type="number" required="" min="0" name="stock_minimal" value="">
+                    <!-- <p class="help-block">Stok minimal utk memberi notifikasi jumlah stock.</p> -->
                   </div>
                   <div class="form-group">
                     <label>Satuan bahan</label>
@@ -57,7 +62,7 @@
                       <i class="glyphicon glyphicon-repeat"></i>
                       RESET
                     </button>
-                    <button type="reset" class="btn btn-default pull-right">
+                    <button onclick="window.history.go(-1); return false;" type="reset" class="btn btn-default pull-right">
                       <i class="glyphicon glyphicon-chevron-left"></i>
                       KEMBALI
                     </button>

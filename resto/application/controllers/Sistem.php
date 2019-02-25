@@ -73,19 +73,19 @@ class Sistem extends CI_Controller {
 				if(isset($_POST['submit'])):
 						$nama 		= $this -> input -> post("nama");
 						$telp 		= $this -> input -> post("telp");
-						$password 	= $this -> input -> post("password");
-						$query  	= $this -> Query -> updateDataDetail(	 array('id_karyawan'=>1),
-																 array( 'nama_karyawan'=>$nama,
-																 'telp_karyawan'=>$telp,
-																 'password'=>$password
+						$alamat 	= $this -> input -> post("alamat");
+						$query  	= $this -> Query -> updateDataDetail(	 array('id_sistem'=>$data['edit']->id_sistem),
+																 array( 'nama_resto'=>$nama,
+																 'telp_resto'=>$telp,
+																 'alamat_resto'=>$alamat
 															 	),
-																  'karyawan');
+																  'sistem');
 					if($query['error']['message']==null):
 						$this->flsh_msg('Sukses.','ok','data berhasil diubah');
-						redirect(base_url('profil'),'refresh');
+						redirect(base_url('sistem'),'refresh');
 					else:
 						$this->flsh_msg('Gagal.','warning','data ubah data :  '.$query['error']['message']);
-						redirect(base_url('profil'),'refresh');
+						redirect(base_url('sistem'),'refresh');
 					endif;
 				endif;
 	}

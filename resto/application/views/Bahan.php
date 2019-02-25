@@ -38,7 +38,15 @@
 							<tr class="odd gradeX">
 								<td><?php echo $data->nama_bahan ?></td>
 								<td><?php echo "Rp ".number_format($data->harga_bahan,0,'.','.');  ?></td>
-								<td><?php echo number_format($data->stock_bahan,0,'.','.').' '.$data->nama_satuan; ?></td>
+								<td>
+									<?php if($data->stock_bahan <= $data->stock_minimal):?>
+										<a href="<?php echo base_url('bahan/edit/').$data->id_bahan."?focus=restock";?>" class="btn btn-xs btn-info" title="bahan hampir habis, silahkan lakukan restock." onClick="return confirm('bahan hampir habis, ingin melakukan restock?');">
+											<i class="glyphicon glyphicon-info-sign"></i>
+										</a>
+									<?php endif;?>
+									<?php echo number_format($data->stock_bahan,0,'.','.').' '.$data->nama_satuan; ?>
+									
+								</td>
 								<td><?php echo $data->tgl_input_bahan ?></td>
 								<td>
 									<a href="<?php echo base_url('bahan/edit/').$data->id_bahan;?>" class="btn btn-xs btn-primary">

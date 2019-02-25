@@ -8,7 +8,11 @@
 			              <p> <img width="256px" height="256px" src="<?php echo base_url('assets/images/logo_cafe.png');?>"></p>
 			              
 			              <p>silahkan gunakan menu berikut untuk mengakses kebutuhan anda</p>
-			              <a class="btn btn-md btn-primary" href="<?php echo base_url('pesanan');?>">
+			             
+			              <a class="btn btn-md btn-primary" href="<?php echo base_url('bahan/daftar_belanja');?>">
+			                <i class="fa fa-history"></i>Daftar Belanja
+			              </a>
+			              <a class="btn btn-md btn-primary" href="<?php echo base_url('pesanan_kasir');?>">
 			                <i class="fa fa-history"></i>Daftar Pesanan
 			              </a>
 			              

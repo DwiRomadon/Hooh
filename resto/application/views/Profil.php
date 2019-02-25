@@ -46,7 +46,7 @@
                       <i class="glyphicon glyphicon-repeat"></i>
                       RESET
                     </button>
-                    <button type="reset" class="btn btn-default pull-right">
+                   <button onclick="window.history.go(-1); return false;" type="reset" class="btn btn-default pull-right">
                       <i class="glyphicon glyphicon-chevron-left"></i>
                       KEMBALI
                     </button>

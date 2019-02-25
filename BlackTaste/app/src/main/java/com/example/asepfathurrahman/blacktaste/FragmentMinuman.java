@@ -68,7 +68,9 @@ public class FragmentMinuman extends Fragment {
         Intent a = getActivity().getIntent();
         final String noNeja = a.getStringExtra("nomeja");
         final String idKaryawan = a.getStringExtra("idkaryawan");
-        String test2 = a.getStringExtra("namapemesan");
+        String idTransaksi = a.getStringExtra("idtransaksi");
+
+        //Toast.makeText(getActivity(), noNeja + " " + idKaryawan + " " + idTransaksi, Toast.LENGTH_LONG).show();
 
         myrecyclerview = (RecyclerView) v.findViewById(R.id.minuman_recyclerview);
         search = (EditText) v.findViewById(R.id.pencarian_minuman);
